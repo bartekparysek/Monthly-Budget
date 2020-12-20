@@ -1,0 +1,118 @@
+import { UIController } from "../views/mainView.js";
+import { budgetController } from "./model.js";
+
+// GLOBAL APP CONTROLLER
+const controller = (function (budgetCtrl, UICtrl) {
+  // a link controller for other 2 modules, arguments have different names - good practice
+  const setupEventListeners = function () {
+    // event listeners are going to be called as soon as the init function
+    const DOM = UICtrl.getDOMstrings();
+    document.querySelector(DOM.button).addEventListener("click", ctrlAddItem);
+    document.addEventListener("keypress", function (e) {
+      if (e.keyCode === 13 || e.which === 13) {
+        ctrlAddItem();
+      }
+    });
+    document
+      .querySelector(DOM.container)
+      .addEventListener("click", ctrlDeleteItem);
+
+    document
+      .querySelector(DOM.inputType)
+      .addEventListener("change", UICtrl.changedType);
+
+    const fileUplo = document.getElementById("file__upload");
+    const uploadForm = document.getElementById("uploadForm");
+
+    uploadForm.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const endpoint = '/uploads';
+      const formData = new FormData();
+
+
+      formData.append("fileUplo", fileUplo.files[0]);
+      fetch(endpoint, {
+        method: "post",
+        body: formData
+
+      }).catch(console.error);
+
+
+    });
+  };
+
+  const updateBudget = function () {
+    // 1. Calculate the budget
+    budgetCtrl.calculateBudget();
+    // 2. Return the budget
+    const budget = budgetCtrl.getBudget();
+    // 3. Display the budget on the UI
+    UICtrl.displayBudget(budget);
+  };
+
+  const updatePercentage = function () {
+    // calc percentages
+    budgetCtrl.calculatePercentage();
+    // read from the budget controller
+    const percentages = budgetCtrl.getPercentages();
+
+    // update the UI
+    UICtrl.displayPercentage(percentages);
+  };
+
+  const ctrlAddItem = function () {
+    let input, newItem;
+    // 1. Get form input data
+    input = UICtrl.getInput();
+
+    if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
+      // 2. Add the item to the budget controller
+      newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+      // 3. Add the item to the UI
+      UICtrl.addListItem(newItem, input.type);
+      // 4. Clear the fields
+      UICtrl.clearFields();
+      // 5. Calculate and update the budget
+      updateBudget();
+      // 6. Update the percentages
+      updatePercentage();
+    }
+
+  };
+  const ctrlDeleteItem = function (e) {
+    let itemID, splitID, type, ID;
+    itemID = e.target.parentNode.parentNode.parentNode.parentNode.id;
+    if (itemID) {
+      // inc-1
+      splitID = itemID.split("-");
+      type = splitID[0];
+      ID = parseInt(splitID[1]);
+      // delete item from the data structure
+      budgetCtrl.deleteItem(type, ID);
+
+      // delete item from UI
+      UICtrl.deleteListItem(itemID);
+      // update and show the budget
+      updateBudget();
+      // update percantges
+      updatePercentage();
+    }
+  };
+
+  return {
+    // object for init function
+    init: function () {
+      console.log("Applications has started");
+      UICtrl.displayMonth();
+      UICtrl.displayBudget({
+        budget: 0,
+        totalInc: 0,
+        totalExp: 0,
+        percentage: -1,
+      });
+      setupEventListeners();
+    },
+  };
+})(budgetController, UIController);
+controller.init(); // Public initialization function - it is the only one function exposed to the Public
