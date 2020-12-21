@@ -21,24 +21,25 @@ const controller = (function (budgetCtrl, UICtrl) {
       .querySelector(DOM.inputType)
       .addEventListener("change", UICtrl.changedType);
 
-    const fileUplo = document.getElementById("file__upload");
-    const uploadForm = document.getElementById("uploadForm");
+    document
+      .getElementById(DOM.uploadType);
 
-    uploadForm.addEventListener("submit", e => {
-      e.preventDefault();
+    document
+      .getElementById(DOM.uploadForm)
+      .addEventListener("submit", e => {
+        e.preventDefault();
 
-      const endpoint = '/uploads';
-      const formData = new FormData();
-
-
-      formData.append("fileUplo", fileUplo.files[0]);
-      fetch(endpoint, {
-        method: "post",
-        body: formData
-
-      }).catch(console.error);
+        const fileUplo = document.getElementById(DOM.uploadType);
+        const endpoint = '/uploads';
+        const formData = new FormData();
 
 
+        formData.append("fileUplo", fileUplo.files[0]);
+        fetch(endpoint, {
+          method: "post",
+          body: formData
+
+        }).catch(console.error);
     });
   };
 
@@ -63,7 +64,7 @@ const controller = (function (budgetCtrl, UICtrl) {
 
   const ctrlAddItem = function () {
     let input, newItem;
-    // 1. Get form input data
+    // 1.a Get form input data
     input = UICtrl.getInput();
 
     if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
@@ -102,7 +103,7 @@ const controller = (function (budgetCtrl, UICtrl) {
 
   return {
     // object for init function
-    init: function () {
+    init: async function () {
       console.log("Applications has started");
       UICtrl.displayMonth();
       UICtrl.displayBudget({
@@ -112,6 +113,10 @@ const controller = (function (budgetCtrl, UICtrl) {
         percentage: -1,
       });
       setupEventListeners();
+      // Get files data
+      let files;
+      files = await budgetCtrl.uploadData();
+      console.log(files);
     },
   };
 })(budgetController, UIController);

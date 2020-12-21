@@ -9,6 +9,7 @@ export const UIController = (function () {
     inputValue: ".add__value",
     button: ".add__btn",
     uploadType: "file__upload",
+    uploadForm: "uploadForm",
     incomeContainer: ".income__list",
     expensesContainer: ".expenses__list",
     budgetLabel: ".budget__value",

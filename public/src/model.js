@@ -25,12 +25,7 @@ export const budgetController = (function () {
     data.allItems[type].forEach((cur) => (sum += cur.value));
     data.totals[type] = sum;
   };
-  /*const getData =  function(){
-    fetch('/get')
-    .then(response => response.json());
-  };
-  getData();
-  */
+
   // data structure
   const data = {
     allItems: {
@@ -64,6 +59,27 @@ export const budgetController = (function () {
       data.allItems[type].push(newItem);
       // Return the new element
       return newItem;
+    },
+
+    uploadData: async function(){
+      const response = await fetch('/uploads');
+      const uploads = await response.json();
+      let paymentsList =  uploads.map((item) =>{
+      let paymentsData = {
+        type: "exp",
+        des: item.Opis,
+        val: item.Obciążenia
+      };
+      if(!item.Obciążenia){
+        paymentsData.val = item.Uznania;
+        paymentsData.type = "inc"
+      }
+      if(!item.Opis){
+        paymentsData.des = item["Rodzaj transakcji"];
+      }
+      return paymentsData;
+    });
+      return paymentsList;
     },
 
     deleteItem: function (type, id) {

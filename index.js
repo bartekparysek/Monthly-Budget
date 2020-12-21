@@ -9,15 +9,14 @@ const fs = require("fs");
 
 const app = express();
 
-
 app.listen(3000, () => console.log("listening at 3000"));
+// serving static files in public dir
+app.use(express.static("public"));
+
 // enabbles file upload
 app.use(fileUpload({
   createParentPath: true,
 }));
-// serving static files in public dir
-app.use(express.static("public"));
-
 // add other middleware
 app.use(express.json());
 app.use(cors());
@@ -60,10 +59,20 @@ app.post('/uploads', async (request, response) => {
           name: sheet.name,
           mimetype: sheet.mimetype,
           size: sheet.size,
-        },
+        }
       });
     }
   } catch (err) {
     response.status(500).send(err);
   }
+});
+
+app.get('/uploads', (request, response) => {
+  fs.readFile('./uploads/transactions.json', (err, data) => {
+    if (err) {
+      response.err(err);
+      return
+    }
+    response.json(JSON.parse(data));
+  })
 });
