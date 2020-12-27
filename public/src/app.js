@@ -116,7 +116,12 @@ const controller = (function (budgetCtrl, UICtrl) {
       // Get files data
       let files;
       files = await budgetCtrl.uploadData();
-      console.log(files);
+      const addingItems = files.forEach(el => UICtrl.addListItem(el, el.type));
+      //UICtrl.addListItem(files,files.type);
+      let currencies;
+      currencies = await budgetCtrl.uploadCurrency();
+      // updated currencies
+      UICtrl.displayCurrencies(currencies);
     },
   };
 })(budgetController, UIController);

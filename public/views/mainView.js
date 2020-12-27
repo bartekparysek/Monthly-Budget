@@ -19,6 +19,9 @@ export const UIController = (function () {
     container: ".container",
     expensesPerc: ".item__percentage",
     dateLabel: ".budget__title--month",
+    tableEUR: "table__euro",
+    tableUSD: "table__usd",
+    tableGBP: "table__funt"
   };
 
   const formatNumber = function (num, type) {
@@ -68,8 +71,8 @@ export const UIController = (function () {
               </div>`;
       }
       // Replace the placeholder with some actual data
-      newHTML = html.replace("%id%", obj.id);
-      newHTML = newHTML.replace("%description%", obj.description);
+      //newHTML = html.replace("%id%", obj.id);
+      newHTML = html.replace("%description%", obj.description);
       newHTML = newHTML.replace("%value%", formatNumber(obj.value, type));
       // Insert the HTML into the DOM
       document.querySelector(element).insertAdjacentHTML("beforeend", newHTML);
@@ -110,6 +113,15 @@ export const UIController = (function () {
       } else {
         document.querySelector(DOMstrings.percentageLabel).textContent = "---";
       }
+    },
+    displayCurrencies: function(exrates){
+      document.querySelector(`#${DOMstrings.tableEUR} > th + th`).textContent = exrates[1].bid;
+      document.querySelector(`#${DOMstrings.tableEUR} > th + th + th`).textContent = exrates[1].ask;
+      document.querySelector(`#${DOMstrings.tableUSD} > th + th`).textContent = exrates[0].bid;
+      document.querySelector(`#${DOMstrings.tableUSD} > th + th + th`).textContent = exrates[0].ask;
+      document.querySelector(`#${DOMstrings.tableGBP} > th + th`).textContent = exrates[2].bid;
+      document.querySelector(`#${DOMstrings.tableGBP} > th + th + th`).textContent = exrates[2].ask;
+
     },
     displayPercentage: function (percentages) {
       const fields = document.querySelectorAll(DOMstrings.expensesPerc);

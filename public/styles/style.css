@@ -37,7 +37,16 @@ body {
     background-position: center;
     position: relative;
 }
-
+table{
+    border-collapse: collapse;
+    border-spacing: 0.5rem;
+    padding:5px;
+}
+td, th{
+    border: 0.5px solid  #555;
+    padding: 0.5rem;
+    text-align: left;
+}
 .budget {
     position: absolute;
     width: 350px;

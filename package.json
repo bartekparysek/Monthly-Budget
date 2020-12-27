@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --watch index.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,9 @@
     "lodash": "^4.17.20",
     "morgan": "^1.10.0"
   },
-  "devDependencies": {},
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/node-fetch": "^2.5.7",
+    "node-fetch": "^2.6.1"
+  }
 }

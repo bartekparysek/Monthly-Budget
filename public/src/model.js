@@ -67,19 +67,26 @@ export const budgetController = (function () {
       let paymentsList =  uploads.map((item) =>{
       let paymentsData = {
         type: "exp",
-        des: item.Opis,
-        val: item.Obciążenia
+        description: item.Opis,
+        value: item.Obciążenia
       };
       if(!item.Obciążenia){
-        paymentsData.val = item.Uznania;
+        paymentsData.value = item.Uznania;
         paymentsData.type = "inc"
       }
       if(!item.Opis){
-        paymentsData.des = item["Rodzaj transakcji"];
+        paymentsData.description = item["Rodzaj transakcji"];
       }
       return paymentsData;
-    });
+      });
       return paymentsList;
+    },
+    uploadCurrency: async function(){
+      const res = await fetch('/api');
+      let currenciesData = await res.json();
+      const currenciesList = [...currenciesData[0].rates];
+      const exrates = currenciesList.filter(ex => ex.code === "USD" || ex.code === "EUR" || ex.code === "GBP");
+      return exrates;
     },
 
     deleteItem: function (type, id) {

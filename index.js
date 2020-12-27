@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const _ = require("lodash");
 const csv = require("csvtojson");
 const fs = require("fs");
+const fetch = require("node-fetch");
 
 const app = express();
 
@@ -66,7 +67,7 @@ app.post('/uploads', async (request, response) => {
     response.status(500).send(err);
   }
 });
-
+// get request for a json file with data
 app.get('/uploads', (request, response) => {
   fs.readFile('./uploads/transactions.json', (err, data) => {
     if (err) {
@@ -75,4 +76,11 @@ app.get('/uploads', (request, response) => {
     }
     response.json(JSON.parse(data));
   })
+});
+// get request for a NBP API
+app.get('/api', async (req, res) => {
+  const apiURL = 'http://api.nbp.pl/api/exchangerates/tables/c/';
+  const currencies = await fetch(apiURL);
+  const data = await currencies.json();
+  return res.json(data);
 });
