@@ -68,7 +68,7 @@ app.post('/uploads', async (request, response) => {
   }
 });
 // get request for a json file with data
-app.get('/uploads', (request, response) => {
+/*app.get('/uploads', (request, response) => {
   fs.readFile('./uploads/transactions.json', (err, data) => {
     if (err) {
       response.err(err);
@@ -77,6 +77,7 @@ app.get('/uploads', (request, response) => {
     response.json(JSON.parse(data));
   })
 });
+*/
 // get request for a NBP API
 app.get('/api', async (req, res) => {
   const apiURL = 'http://api.nbp.pl/api/exchangerates/tables/c/';

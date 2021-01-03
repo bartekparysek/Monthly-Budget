@@ -1,7 +1,7 @@
 {
   "name": "budgety",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index",
   "scripts": {
     "start": "nodemon --watch index.js"
   },
