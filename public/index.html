@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
     <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link type="text/css" rel="stylesheet" href="./styles/style.css">
     <link rel="apple-touch-icon" sizes="180x180" href="./src/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon_io/favicon-32x32.png">
@@ -15,6 +16,7 @@
 <body>
 
     <div class="top">
+
         <div class="currency__table">
             <h1>Exchange Rates</h1>
             <table id="table">
@@ -72,8 +74,10 @@
                 <input type="file" id="file__upload" name="fileUplo" accept=".csv"><br>
                 <button type="submit" id="file__select">Upload</button>
             </form>
-
+            <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
+            <div class="ct-chart ct-perfect-fourth" id="chart2"></div>
         </div>
+
     </div>
 
 
@@ -159,8 +163,9 @@
 
 
     </div>
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/csv-sort/dist/csv-sort.umd.js"></script>
-    <script src="papaparse.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
     <script type="module" src="./src/app.js"></script>
 </body>
 

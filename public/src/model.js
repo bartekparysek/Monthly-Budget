@@ -27,7 +27,7 @@ export const budgetController = (function () {
   };
 
   // data structure
-  const data = {
+  let data = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : {
     allItems: {
       exp: [],
       inc: [],
@@ -57,6 +57,7 @@ export const budgetController = (function () {
       }
       // Push it into our data structure
       data.allItems[type].push(newItem);
+      localStorage.setItem(`${type}`, JSON.stringify(data.allItems[type]));
       // Return the new element
       return newItem;
     },
@@ -69,17 +70,17 @@ export const budgetController = (function () {
       let paymentsData = {
         type: "exp",
         description: item.Description,
-        value: Math.abs(parseInt(item.Value))
+        value: Math.abs(parseFloat(item.Value))
       };
       if(item.Value > 0 ){
-        paymentsData.value = Math.abs(parseInt(item.Value));
+        paymentsData.value = parseFloat(item.Value);
         paymentsData.type = "inc"
       }
       if(!item.Description || item.Description === null){
         paymentsData.description = "Transaction";
       }
       //if(item.Obciążenia || item.Uznania === NaN)
-      return paymentsData
+      return paymentsData;
     });
       return this.pushData(paymentsList);
 
@@ -112,9 +113,11 @@ export const budgetController = (function () {
       expense.forEach(el => {
 
         data.allItems.exp.push(new Expense(el.id,el.description, el.value));
+        localStorage.setItem('exp', JSON.stringify(data.allItems.exp));
       });
       income.forEach(el => {
         data.allItems.inc.push(new Income(el.id,el.description,el.value));
+        localStorage.setItem('inc', JSON.stringify(data.allItems.inc));
       });
       calculateTotal("exp");
       calculateTotal("inc");
@@ -123,7 +126,7 @@ export const budgetController = (function () {
 
 
     uploadCurrency: async function(){
-      const res = await fetch('/api');
+      const res = await fetch('https://thingproxy.freeboard.io/fetch/http://api.nbp.pl/api/exchangerates/tables/c/');
       let currenciesData = await res.json();
       const currenciesList = [...currenciesData[0].rates];
       const exrates = currenciesList.filter(ex => ex.code === "USD" || ex.code === "EUR" || ex.code === "GBP");
@@ -137,6 +140,7 @@ export const budgetController = (function () {
 
       if (index !== -1) {
         data.allItems[type].splice(index, 1);
+        localStorage.removeItem(`${type}`, JSON.stringify(data.allItems[type].id[ids]));
       }
     },
 
@@ -155,6 +159,12 @@ export const budgetController = (function () {
     },
     calculatePercentage: function () {
       data.allItems.exp.forEach((cur) => cur.calcPercentage(data.totals.inc));
+    },
+    getTransactions: function() {
+      return {
+        exp:data.allItems.exp,
+        inc:data.allItems.inc
+      }
     },
 
     getPercentages: function () {

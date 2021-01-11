@@ -54,6 +54,9 @@ export const UIController = (function () {
         value: parseFloat(document.querySelector(DOMstrings.inputValue).value),
       };
     },
+    getFile: function () {
+      return document.getElementById(DOMstrings.uploadType).files[0];
+    },
     addListItem: function (obj, type) {
       let html, newHTML, element;
       // Create HTML string with a placeholder text
@@ -142,6 +145,18 @@ export const UIController = (function () {
       year = now.getFullYear();
       document.querySelector(DOMstrings.dateLabel).textContent =
         month + " " + year;
+    },
+    displayBarChart: function(ids,values) {
+      new Chartist.Bar('#chart1', {
+        labels: ids,
+        series: [values]
+      });
+
+    },
+    displayBudgetChart: function(budget){
+      new Chartist.Pie('#chart2', {
+        series: [budget.totalExp,budget.totalInc]
+      });
     },
     changedType: function () {
       const fields = document.querySelectorAll(

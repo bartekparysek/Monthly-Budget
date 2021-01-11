@@ -20,29 +20,42 @@ const controller = (function (budgetCtrl, UICtrl) {
     document
       .querySelector(DOM.inputType)
       .addEventListener("change", UICtrl.changedType);
-
-    document
-      .getElementById(DOM.uploadType);
     // papa parse event listener
     document
       .getElementById(DOM.uploadForm)
-      .addEventListener("submit", e => {
-        e.preventDefault();
+      .addEventListener("submit", uploadFiles);
+    };
 
-        let fileUplo = document.getElementById(DOM.uploadType);
-        const fileList = fileUplo.files[0];
+    const ctrlTransactions = function(){
+      let transactions = budgetCtrl.getTransactions();
+      const expIdArray = transactions.exp.map(el => el.id);
+      const expValueArray = transactions.exp.map(item => item.value);
 
-        const files = Papa.parse(fileUplo.files[0], {
+      transactions.exp.forEach( el => UICtrl.addListItem(el, "exp"));
+      transactions.inc.forEach(el => UICtrl.addListItem(el, "inc" ));
+
+      UICtrl.displayBarChart(expIdArray,expValueArray);
+
+      updateBudget();
+    };
+    const uploadFiles = function (e){
+      e.preventDefault();
+
+
+        let fileList = UICtrl.getFile();
+
+        const files = Papa.parse(fileList, {
           header: true,
           download:true,
           dynamicTyping: true,
           complete: function(results) {
             budgetCtrl.uploadData(results.data);
+            ctrlTransactions();
             budgetCtrl.testing();
           }
         });
-      });
-    };
+
+      };
       /*
         //Get files data
         const addingItems = data variable .forEach(el => UICtrl.addListItem(el, el.type));
@@ -62,8 +75,10 @@ const controller = (function (budgetCtrl, UICtrl) {
     budgetCtrl.calculateBudget();
     // 2. Return the budget
     const budget = budgetCtrl.getBudget();
+    console.log(budget);
     // 3. Display the budget on the UI
     UICtrl.displayBudget(budget);
+    UICtrl.displayBudgetChart(budget);
   };
 
   const updatePercentage = function () {
@@ -126,7 +141,12 @@ const controller = (function (budgetCtrl, UICtrl) {
         totalExp: 0,
         percentage: -1,
       });
-
+      UICtrl.displayBarChart([],[[]]);
+      const par = {
+        totalExp: 0,
+        totalInc: 1
+      };
+      UICtrl.displayBudgetChart(par);
       setupEventListeners();
 
       let currencies;
