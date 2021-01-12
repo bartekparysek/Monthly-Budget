@@ -27,7 +27,7 @@ export const budgetController = (function () {
   };
 
   // data structure
-  let data = localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : {
+  const data = {
     allItems: {
       exp: [],
       inc: [],
@@ -57,7 +57,7 @@ export const budgetController = (function () {
       }
       // Push it into our data structure
       data.allItems[type].push(newItem);
-      localStorage.setItem(`${type}`, JSON.stringify(data.allItems[type]));
+      //localStorage.setItem(`${type}`, JSON.stringify(data.allItems[type]));
       // Return the new element
       return newItem;
     },
@@ -113,11 +113,9 @@ export const budgetController = (function () {
       expense.forEach(el => {
 
         data.allItems.exp.push(new Expense(el.id,el.description, el.value));
-        localStorage.setItem('exp', JSON.stringify(data.allItems.exp));
       });
       income.forEach(el => {
         data.allItems.inc.push(new Income(el.id,el.description,el.value));
-        localStorage.setItem('inc', JSON.stringify(data.allItems.inc));
       });
       calculateTotal("exp");
       calculateTotal("inc");

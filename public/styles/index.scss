@@ -1,0 +1,227 @@
+$background-color: #EEEFF3;
+$text-color: #313742;
+$button-color: #5072BE;
+$default-green: #ABDB7A;
+$default-red: #E56868;
+$form-grey: #EAE7E7;
+$text-grey:#BEBBBB;
+$form: #707070;
+$white: #ffff;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap');
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+}
+html,body {
+    background-color: $background-color;
+    color:$text-color;
+    height:100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display:flex;
+    flex-direction: column;
+    font-family: Montserrat, sans-serif;
+}
+h2 {
+    margin:0;
+}
+p{
+    margin:0;
+}
+.container > div{
+    background-color: white;
+    border: 0.5px inherit;
+    border-radius: 10px;
+
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+fieldset{
+    border:none;
+    margin:0;
+    padding: 0 0 0 30px;
+    display: flex;
+
+}
+
+.add__value,.add__description{
+    height: 40px;
+    background-color: $form-grey;
+    border-radius: 4px;
+    border: 0.5px;
+    text-align: center;
+    font-size: 10px;
+    margin: 0 10px 0 0;
+}
+.add__value{
+    width: 60px;
+
+}
+.add__description{
+    width: 95px;
+
+}
+
+.add__btn, #file__upload, .add__file label{
+
+    position: relative;
+    width:130px;
+    height:40px;
+    border-radius:4px;
+    border:0.5px;
+    margin: 8px 0;
+    background-color: $button-color;
+    color: white;
+    font-size: 12px;
+
+
+}
+.container__import p {
+    padding: 0 0 0 30px;
+    font-size: 10px;
+    margin-right: 20px;
+}
+.form{
+    display:flex;
+    padding: 0 0 0 30px;
+
+}
+#file__select{
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	position: absolute;
+}
+#file__upload{
+    margin-right: 20px;
+}
+.add__file label{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right:10px;
+}
+.add__file input:hover + label,
+.add__file input:focus + label{
+    transform: scale(1.02);
+}
+.add__file input:focus + label{
+    outline: 1 px solid #000;
+    outline: -webkit-focus-ring-color auto 2px;
+}
+.transactions__row{
+    padding: 0 0 0 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.transactions__row > p + p {
+    padding-right: 40px;
+}
+.item, .right{
+    display:flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+.item__value{
+    margin: 0 5px;
+
+}
+.item__delete--btn {
+    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    margin: -1px 3px 0 0 ;
+    color: $text-color;
+}
+
+//.item__delete--btn:focus { outline: none; }
+//.item__delete--btn:active { transform: translateY(2px); }
+
+//.item:hover .item__delete--btn { display: block; }
+//.item:hover .item__value { transform: translateX(-20px); }
+//.item:hover .item__percentage { transform: translateX(-20px); }
+.budget__text{
+    padding-left: 30px;
+    margin:0 30px 5px 0;
+}
+@media only screen and (max-width:480px) {
+
+    h1{
+        font-size: 2em;
+        margin: 15px 0 14px 17px ;
+    }
+    .currency__table{
+        display: none;
+    }
+    .container > div{
+        margin: 3px 17px 0 17px;
+    }
+    .container > div > h2{
+        padding: 10px 0 3px 30px;
+
+    }
+    .radio__wraper{
+        margin: 0 10px 0 0;
+        display: flex;
+        flex-direction: column;
+        font-size: 10px;
+        justify-content: space-between ;
+    }
+    .add__container{
+        padding: 0 0 0 30px;
+    }
+    .transactions__list{
+        display:block;
+        padding: 3px 0;
+    }
+    .item{
+        //padding: 0 0 0 30px;
+        font-size: 10px;
+        margin: 3px 30px;
+        border-radius: 4px;;
+    }
+    .item__description{
+        margin: 0 3px;
+        font-size: 12px;
+    }
+
+    .item:nth-child(even) { background-color: $form-grey; }
+    .budget__income, .budget__expenses{
+        display:flex;
+        font-size: 15px;
+        justify-content: space-between;
+        margin-right:30px;
+
+    }
+    .budget__expenses--value,.budget__income--value{
+        font-size: 15px;
+
+
+    }
+    .budget__income--value{
+        padding-left: 25px;
+        color:$default-green;
+    }
+    .budget__expenses--value{
+        padding-left: 14px;
+        color:$default-red;
+    }
+    .budget__income--percentage,.budget__expenses--percentage{
+        display:none;
+    }
+}

@@ -2,23 +2,24 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" content="width=device-width,initial-scale=1" name="viewport">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
     <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <link type="text/css" rel="stylesheet" href="./styles/style.css">
+    <link type="text/css" rel="stylesheet" href="./styles/index.css">
     <link rel="apple-touch-icon" sizes="180x180" href="./src/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon_io/favicon-16x16.png">
-    <title>Budgety</title>
+    <title>Monthly Budget</title>
 </head>
 
 <body>
-
-    <div class="top">
-
+    <header>
+        <h1>Monthly Budget</h1>
+    </header>
+    <section class="container">
         <div class="currency__table">
-            <h1>Exchange Rates</h1>
+            <h2>Exchange Rates</h2>
             <table id="table">
                 <thead>
                     <tr>
@@ -38,7 +39,7 @@
                         <th>3,0000</th>
                         <th>3,0000</th>
                     </tr>
-                    <tr id ="table__funt">
+                    <tr id="table__funt">
                         <th>GBP</th>
                         <th>4,0000</th>
                         <th>4,0000</th>
@@ -48,118 +49,139 @@
             </table>
 
         </div>
-        <div class="budget">
-            <div class="budget__title">
-                Available Budget in <span class="budget__title--month">%Month%</span>:
-            </div>
-
-            <div class="budget__value">+ 2,345.64</div>
-
-            <div class="budget__income clearfix">
-                <div class="budget__income--text">Income</div>
-                <div class="right">
-                    <div class="budget__income--value">+ 4,300.00</div>
-                    <div class="budget__income--percentage">&nbsp;</div>
+        <div class="container__transaction">
+            <h2>Add Transaction</h2>
+            <fieldset class="add__type">
+                <div class="radio__wraper">
+                    <label>
+                        <input type="radio" id="income" value="inc" name="radio">
+                        <label for="income">Income</label>
+                    </label>
+                    <label>
+                        <input type="radio" id="expense" value="exp" name="radio">
+                        <label for="expense">Expense</label>
+                    </label>
                 </div>
-            </div>
+                <input type="text" inputmode="decimal" class="add__value" placeholder="Value">
+                <input type="text" class="add__description" placeholder="Description">
 
-            <div class="budget__expenses clearfix">
-                <div class="budget__expenses--text">Expenses</div>
-                <div class="right clearfix">
-                    <div class="budget__expenses--value">- 1,954.36</div>
-                    <div class="budget__expenses--percentage">45%</div>
-                </div>
-            </div>
-            <form class="form" id="uploadForm">
-                <input type="file" id="file__upload" name="fileUplo" accept=".csv"><br>
-                <button type="submit" id="file__select">Upload</button>
-            </form>
-            <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
-            <div class="ct-chart ct-perfect-fourth" id="chart2"></div>
-        </div>
-
-    </div>
-
-
-
-    <div class="bottom">
-        <div class="add">
+            </fieldset>
             <div class="add__container">
+                <!--
                 <select class="add__type">
                     <option value="inc" selected>+</option>
                     <option value="exp">-</option>
                 </select>
-                <input type="text" class="add__description" placeholder="Add description">
-                <input type="number" class="add__value" placeholder="Value">
-                <button class="add__btn"><i class="ion-ios-checkmark-outline"></i></button>
+                -->
+            <button class="add__btn">Submit</button>
             </div>
         </div>
 
-        <div class="container clearfix">
-            <div class="income">
-                <h2 class="icome__title">Income</h2>
-
-                <div class="income__list">
-
-                    <!--
-                        <div class="item clearfix" id="income-0">
-                            <div class="item__description">Salary</div>
-                            <div class="right clearfix">
-                                <div class="item__value">+ 2,100.00</div>
-                                <div class="item__delete">
-                                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item clearfix" id="income-1">
-                            <div class="item__description">Sold car</div>
-                            <div class="right clearfix">
-                                <div class="item__value">+ 1,500.00</div>
-                                <div class="item__delete">
-                                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-
+        <div class="container__import">
+            <h2>Import .CSV</h2>
+            <p>Please make sure that your file has only 2 columns named <b>Description</b> and <b>Value</b> (Description;Value)</p>
+            <form class="form" id="uploadForm">
+                <div class="add__file">
+                    <input type="file" id="file__select" name="fileUplo" accept=".csv">
+                    <label for="file__select" class="file__btn">Choose a file</label>
                 </div>
-            </div>
 
-
-
-            <div class="expenses">
-                <h2 class="expenses__title">Expenses</h2>
-
-                <div class="expenses__list">
-
-                    <!--
-                        <div class="item clearfix" id="expense-0">
-                            <div class="item__description">Apartment rent</div>
-                            <div class="right clearfix">
-                                <div class="item__value">- 900.00</div>
-                                <div class="item__percentage"></div>
-                                <div class="item__delete">
-                                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item clearfix" id="expense-1">
-                            <div class="item__description">Grocery shopping</div>
-                            <div class="right clearfix">
-                                <div class="item__value">- 435.28</div>
-                                <div class="item__percentage">10%</div>
-                                <div class="item__delete">
-                                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-
-                </div>
-            </div>
+                <button type="submit" id="file__upload">Upload</button>
+            </form>
         </div>
+        <div class="container__transactions--list">
+            <h2>Transactions List</h2>
+            <div class="transactions__row">
+                <p>Description</p>
+                <p>Value</p>
+            </div>
+
+
+
+            <div class="transactions__list">
+
+
+                <div class="item clearfix" id="income-0">
+                    <div class="item__description">Salary</div>
+                    <div class="right clearfix">
+                        <div class="item__value">+ 2,100.00</div>
+                        <div class="item__delete">
+                            <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                <div class="item clearfix" id="income-1">
+                    <div class="item__description">Sold car</div>
+                    <div class="right clearfix">
+                        <div class="item__value">+ 1,500.00</div>
+                        <div class="item__delete">
+                            <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                        </div>
+                    </div>
+                </div>
+                -->
+                <!--
+                <div class="item clearfix" id="expense-0">
+                    <div class="item__description">Apartment rent</div>
+                    <div class="right clearfix">
+                        <div class="item__value">- 900.00</div>
+                        <div class="item__percentage"></div>
+                        <div class="item__delete">
+                            <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item clearfix" id="expense-1">
+                    <div class="item__description">Grocery shopping</div>
+                    <div class="right clearfix">
+                        <div class="item__value">- 435.28</div>
+                        <div class="item__percentage">10%</div>
+                        <div class="item__delete">
+                            <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </div>
+
+        </div>
+        <div class="container__transaction--overview">
+            <h2>Transaction Overview</h2>
+            <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
+        </div>
+
+        <div class="container__budget">
+            <h2>Budget</h2>
+            <div class="budget__text">
+                <div class="budget__title">
+                    Available Budget in <span class="budget__title--month">%Month%</span>:
+                </div>
+
+                <div class="budget__value">+ 2,345.64</div>
+
+                <div class="budget__income clearfix">
+                    <div class="budget__income--text">Income</div>
+                    <div class="right">
+                        <div class="budget__income--value">+ 4,300.00</div>
+                        <div class="budget__income--percentage">&nbsp;</div>
+                    </div>
+                </div>
+
+                <div class="budget__expenses clearfix">
+                    <div class="budget__expenses--text">Expenses</div>
+                    <div class="right clearfix">
+                        <div class="budget__expenses--value">- 1,954.36</div>
+                        <div class="budget__expenses--percentage">45%</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="ct-chart ct-perfect-fourth" id="chart2"></div>
+        </div>
+    </section>
+
 
 
     </div>

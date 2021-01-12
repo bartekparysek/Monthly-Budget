@@ -4,14 +4,13 @@ export const UIController = (function () {
 
   const DOMstrings = {
     // in case of strings would be changed
-    inputType: ".add__type",
+    inputType: `input[name="radio"]:checked`,
     inputDesc: ".add__description",
     inputValue: ".add__value",
     button: ".add__btn",
-    uploadType: "file__upload",
+    uploadType: "file__select",
     uploadForm: "uploadForm",
-    incomeContainer: ".income__list",
-    expensesContainer: ".expenses__list",
+    transactionsContainer: ".transactions__list",
     budgetLabel: ".budget__value",
     incomeLabel: ".budget__income--value",
     expensesLabel: ".budget__expenses--value",
@@ -58,27 +57,25 @@ export const UIController = (function () {
       return document.getElementById(DOMstrings.uploadType).files[0];
     },
     addListItem: function (obj, type) {
-      let html, newHTML, element;
+      let html, newHTML;
       // Create HTML string with a placeholder text
       if (type === "inc") {
-        element = DOMstrings.incomeContainer;
         html = `<div class="item clearfix" id="inc-%id%"> <div class="item__description">%description%</div>
               <div class="right clearfix"> <div class="item__value">%value%</div> <div class="item__delete">
               <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div>
               </div>`;
       } else if (type === "exp") {
-        element = DOMstrings.expensesContainer;
         html = `<div class="item clearfix" id="exp-%id%"> <div class="item__description">%description%</div>
               <div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage"></div>
               <div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div>
               </div>`;
       }
       // Replace the placeholder with some actual data
-      //newHTML = html.replace("%id%", obj.id);
+      newHTML = html.replace("%id%", obj.id);
       newHTML = html.replace("%description%", obj.description);
       newHTML = newHTML.replace("%value%", formatNumber(obj.value, type));
       // Insert the HTML into the DOM
-      document.querySelector(element).insertAdjacentHTML("beforeend", newHTML);
+      document.querySelector(DOMstrings.transactionsContainer).insertAdjacentHTML("beforeend", newHTML);
     },
     deleteListItem: function (selectorID) {
       let el = document.getElementById(selectorID);

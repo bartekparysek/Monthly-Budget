@@ -17,14 +17,15 @@ const controller = (function (budgetCtrl, UICtrl) {
       .querySelector(DOM.container)
       .addEventListener("click", ctrlDeleteItem);
 
-    document
+    /*document // some red focus add event listener DELETE later
       .querySelector(DOM.inputType)
       .addEventListener("change", UICtrl.changedType);
+    */
     // papa parse event listener
     document
       .getElementById(DOM.uploadForm)
       .addEventListener("submit", uploadFiles);
-    };
+  }
 
     const ctrlTransactions = function(){
       let transactions = budgetCtrl.getTransactions();
@@ -55,7 +56,7 @@ const controller = (function (budgetCtrl, UICtrl) {
           }
         });
 
-      };
+    };
       /*
         //Get files data
         const addingItems = data variable .forEach(el => UICtrl.addListItem(el, el.type));
@@ -75,7 +76,6 @@ const controller = (function (budgetCtrl, UICtrl) {
     budgetCtrl.calculateBudget();
     // 2. Return the budget
     const budget = budgetCtrl.getBudget();
-    console.log(budget);
     // 3. Display the budget on the UI
     UICtrl.displayBudget(budget);
     UICtrl.displayBudgetChart(budget);
@@ -103,10 +103,16 @@ const controller = (function (budgetCtrl, UICtrl) {
       UICtrl.addListItem(newItem, input.type);
       // 4. Clear the fields
       UICtrl.clearFields();
+      //Update chart
+      let transactions = budgetCtrl.getTransactions();
+      const expIdArray = transactions.exp.map(el => el.id);
+      const expValueArray = transactions.exp.map(item => item.value);
+      UICtrl.displayBarChart(expIdArray,[...expValueArray]);
       // 5. Calculate and update the budget
       updateBudget();
       // 6. Update the percentages
       updatePercentage();
+
     }
 
   };
@@ -155,7 +161,6 @@ const controller = (function (budgetCtrl, UICtrl) {
       UICtrl.displayCurrencies(currencies);
 
       budgetCtrl.testing();
-
     }
   };
 })(budgetController, UIController);

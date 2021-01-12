@@ -274,7 +274,6 @@ h2 {
     display: inline-block;
     vertical-align: middle;
     line-height: 1;
-    display: none;
 }
 
 .item__delete--btn:focus { outline: none; }
