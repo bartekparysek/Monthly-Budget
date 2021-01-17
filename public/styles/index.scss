@@ -24,17 +24,33 @@ html,body {
     flex-direction: column;
     font-family: Montserrat, sans-serif;
 }
-h2 {
+h2,h1 {
     margin:0;
 }
 p{
     margin:0;
 }
-.container > div{
-    background-color: white;
-    border: 0.5px inherit;
-    border-radius: 10px;
+.container {
+    padding: 0 17px 0 17px;
+}
 
+.input__section, .output__section{
+    display:flex;
+    flex-direction: column;
+}
+
+.container__transaction,.container__import, .container__transactions--list,
+.container__transaction--overview, .container__budget{
+    background-color: white;
+    border: 0.5px;
+    border-radius: 10px;
+    padding: 5px 20px 5px 20px;
+    margin-bottom: 3px;
+
+}
+
+.input__section > div, .output__section > div{
+    flex: 1;
 }
 button,
 input,
@@ -49,9 +65,25 @@ textarea {
 fieldset{
     border:none;
     margin:0;
-    padding: 0 0 0 30px;
     display: flex;
-
+    padding: 10px 0;
+    //text-align: center;
+}
+.radio__wraper{
+    padding: 5px 6px 0 0;
+    margin: 0 4px 0 0;
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    justify-content: space-evenly ;
+}
+.radio__wraper label {
+    display: flex;
+}
+#income, #expense{
+    margin-right: 8%;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .add__value,.add__description{
@@ -61,7 +93,8 @@ fieldset{
     border: 0.5px;
     text-align: center;
     font-size: 10px;
-    margin: 0 10px 0 0;
+    padding: 5px 5px 0 0;
+    margin-top:5px;
 }
 .add__value{
     width: 60px;
@@ -71,30 +104,30 @@ fieldset{
     width: 95px;
 
 }
+.container__import p {
+    padding: 10px 0;
 
+}
 .add__btn, #file__upload, .add__file label{
 
     position: relative;
-    width:130px;
+    width: 130px;
     height:40px;
     border-radius:4px;
     border:0.5px;
-    margin: 8px 0;
+    padding: 15px;
     background-color: $button-color;
     color: white;
     font-size: 12px;
 
-
 }
 .container__import p {
-    padding: 0 0 0 30px;
     font-size: 10px;
-    margin-right: 20px;
 }
 .form{
     display:flex;
-    padding: 0 0 0 30px;
-
+    padding: 5px 0;
+    //justify-content: space-evenly;
 }
 #file__select{
     width: 0.1px;
@@ -102,40 +135,47 @@ fieldset{
 	opacity: 0;
 	position: absolute;
 }
-#file__upload{
-    margin-right: 20px;
+.add__container{
+    padding:5px 0;
 }
 .add__file label{
     display:flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin-right:10px;
+    margin-right: 5px;
 }
 .add__file input:hover + label,
 .add__file input:focus + label{
     transform: scale(1.02);
 }
 .add__file input:focus + label{
-    outline: 1 px solid #000;
+    outline: 1px solid #000;
     outline: -webkit-focus-ring-color auto 2px;
 }
 .transactions__row{
-    padding: 0 0 0 30px;
     display: flex;
     justify-content: space-between;
 }
-.transactions__row > p + p {
-    padding-right: 40px;
-}
+
 .item, .right{
     display:flex;
     justify-content: space-between;
     font-size: 12px;
 }
-.item__value{
-    margin: 0 5px;
 
+.item{
+    margin: 3px 0;
+    font-size: 10px;
+    border-radius: 4px;
+    padding: 5px 5px;
+}
+
+.item__description{
+    font-size: 12px;
+}
+.item__value, .item__description{
+    margin: 3px 10px;
 }
 .item__delete--btn {
     font-size: 18px;
@@ -145,7 +185,7 @@ fieldset{
     display: inline-block;
     vertical-align: middle;
     line-height: 1;
-    margin: -1px 3px 0 0 ;
+    margin: 1px 3px 0 0 ;
     color: $text-color;
 }
 
@@ -155,73 +195,228 @@ fieldset{
 //.item:hover .item__delete--btn { display: block; }
 //.item:hover .item__value { transform: translateX(-20px); }
 //.item:hover .item__percentage { transform: translateX(-20px); }
-.budget__text{
-    padding-left: 30px;
+
+/*.budget__text{
+    //padding-left: 30px;
     margin:0 30px 5px 0;
 }
-@media only screen and (max-width:480px) {
+*/
+.budget__title{
+    padding: 5px 0;
+}
+.budget__value{
+    text-align: center;
+    padding: 10px 0;
+}
+.budget__income--value{
+    //padding-left: 25px;
+    color:$default-green;
+}
+.budget__expenses--value{
+    //padding-left: 14px;
+    color:$default-red;
+}
+.item:nth-child(even) { background-color: $form-grey; }
+.budget__income, .budget__expenses{
+    display:flex;
+    font-size: 15px;
+    justify-content: space-between;
+    //margin-right:30px;
+
+}
+.budget__expenses--value,.budget__income--value{
+    font-size: 15px;
+}
+
+.budget__income--percentage,.budget__expenses--percentage{
+    display:none;
+}
+
+@media only screen and (max-width:664px) {
 
     h1{
         font-size: 2em;
-        margin: 15px 0 14px 17px ;
+        padding: 0 35px 0 35px;
     }
     .currency__table{
         display: none;
     }
-    .container > div{
-        margin: 3px 17px 0 17px;
-    }
-    .container > div > h2{
-        padding: 10px 0 3px 30px;
 
+    .container__transaction,.container__transaction--overview{
+        margin-bottom: 3px;
     }
-    .radio__wraper{
-        margin: 0 10px 0 0;
-        display: flex;
-        flex-direction: column;
-        font-size: 10px;
-        justify-content: space-between ;
-    }
-    .add__container{
-        padding: 0 0 0 30px;
-    }
+
     .transactions__list{
         display:block;
         padding: 3px 0;
+
     }
-    .item{
-        //padding: 0 0 0 30px;
-        font-size: 10px;
-        margin: 3px 30px;
-        border-radius: 4px;;
-    }
-    .item__description{
-        margin: 0 3px;
-        font-size: 12px;
+    #income + label, #expense + label{
+        font-size: 11.5px;
     }
 
-    .item:nth-child(even) { background-color: $form-grey; }
-    .budget__income, .budget__expenses{
-        display:flex;
-        font-size: 15px;
+}
+@media only screen and (min-width: 665px) and (max-width: 1023px) {
+    h1{
+        font-size: 2em;
+        padding: 0 35px 0 35px;
+    }
+
+    .currency__table{
+        display: none;
+    }
+    .add__value,.add__description{
+        padding: 20px;
+        min-width: 140px;
+        //font-size: 14px;
+
+    }
+    .add__value{
+        margin-right: 5px;
+    }
+
+    .container__transaction,.container__transaction--overview{
+        margin-right: 3px;
+    }
+    .input__section, .output__section{
+        flex-direction: row;
+    }
+    fieldset {
+        flex-direction: column;
+
+    }
+    .radio__wraper{
+        padding: 10px;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .radio__wraper > label {
+        font-size: 14px;
+        margin-top: -2px;
+    }
+    #expense, #income{
+        margin-top: 3px;
+    }
+
+
+    .input__wraper{
+        display: flex;
+        justify-content: space-around;
+
+    }
+    .add__container{
+        display: flex;
+        justify-content: center;
+    }
+    .add__btn{
+        min-width: 160px;
+        padding: 15px;
+
+    }
+    .form{
+        justify-content: space-evenly;
+    }
+    .container__import p {
+        font-size: 14px;
+        padding: 14px;
+
+    }
+    .container__transaction,.container__import, .container__transactions--list,
+    .container__transaction--overview, .container__budget{
+    border: 0.5px;
+    border-radius: 10px;
+    padding: 10px 30px;
+    margin-bottom: 3px;
+    }
+}
+
+@media only screen and (min-width: 1024px){
+    h1{
+        font-size: 2em;
+        padding: 10px 47px 10px 47px;
+    }
+    .input__section, .output__section{
+        flex-direction: row;
+    }
+    #expense, #income{
+        margin-top: 4px;
+    }
+    .radio__wraper{
+        font-size: 16px;
+        padding: 10px;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    fieldset {
+        flex-direction: column;
+
+    }
+
+    .input__wraper{
+        display: flex;
+        justify-content: space-around;
+
+    }
+    .add__value,.add__description{
+        padding: 20px;
+        min-width: 200px;
+        //font-size: 14px;
+
+    }
+    .add__value{
+        margin-right: 5px;
+    }
+    .container__import{
+        display: flex;
+        flex-direction: column;
         justify-content: space-between;
-        margin-right:30px;
 
     }
-    .budget__expenses--value,.budget__income--value{
-        font-size: 15px;
+    .container__import p {
+        font-size: 16px;
+        padding: 20px 0;
 
+    }
+    .container__import > div {
+        margin-top: 5px;
+    }
+    .add__btn{
+        min-width: 200px;
+        padding: 15px;
 
     }
-    .budget__income--value{
-        padding-left: 25px;
-        color:$default-green;
+    .form{
+        padding: 10px 0;
+        justify-content: space-around;
     }
-    .budget__expenses--value{
-        padding-left: 14px;
-        color:$default-red;
+    .file__btn, #file__upload{
+        min-width: 200px;
     }
-    .budget__income--percentage,.budget__expenses--percentage{
-        display:none;
+    .add__container{
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+    /*
+    .input__section{
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .container__transaction{
+        margin-bottom: 10px;
+    }
+    */
+    .container__transaction,.container__import, .container__transactions--list,
+    .container__transaction--overview, .container__budget{
+    background-color: white;
+    border: 0.5px;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 3px;
+
+}
+    .container__transaction,.container__transaction--overview{
+        margin-right: 3px;
     }
 }

@@ -123,13 +123,14 @@ export const budgetController = (function () {
     },
 
 
-    uploadCurrency: async function(){
+    /*uploadCurrency: async function(){
       const res = await fetch('https://thingproxy.freeboard.io/fetch/http://api.nbp.pl/api/exchangerates/tables/c/');
       let currenciesData = await res.json();
       const currenciesList = [...currenciesData[0].rates];
       const exrates = currenciesList.filter(ex => ex.code === "USD" || ex.code === "EUR" || ex.code === "GBP");
       return exrates;
     },
+    */
 
     deleteItem: function (type, id) {
       let ids, index;

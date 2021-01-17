@@ -114,7 +114,8 @@ export const UIController = (function () {
         document.querySelector(DOMstrings.percentageLabel).textContent = "---";
       }
     },
-    displayCurrencies: function(exrates){
+
+    /*displayCurrencies: function(exrates){
       document.querySelector(`#${DOMstrings.tableEUR} > th + th`).textContent = exrates[1].bid;
       document.querySelector(`#${DOMstrings.tableEUR} > th + th + th`).textContent = exrates[1].ask;
       document.querySelector(`#${DOMstrings.tableUSD} > th + th`).textContent = exrates[0].bid;
@@ -123,6 +124,7 @@ export const UIController = (function () {
       document.querySelector(`#${DOMstrings.tableGBP} > th + th + th`).textContent = exrates[2].ask;
 
     },
+    */
     displayPercentage: function (percentages) {
       const fields = document.querySelectorAll(DOMstrings.expensesPerc);
 

@@ -155,10 +155,11 @@ const controller = (function (budgetCtrl, UICtrl) {
       UICtrl.displayBudgetChart(par);
       setupEventListeners();
 
-      let currencies;
+      /*let currencies;
       currencies = await budgetCtrl.uploadCurrency();
       // updated currencies
       UICtrl.displayCurrencies(currencies);
+      */
 
       budgetCtrl.testing();
     }
