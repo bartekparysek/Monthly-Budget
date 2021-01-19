@@ -54,7 +54,6 @@ const controller = (function (budgetCtrl, UICtrl) {
             budgetCtrl.uploadData(results.data);
             ctrlTransactions();
             ctrlBarChart();
-            budgetCtrl.testing();
           }
         });
 
