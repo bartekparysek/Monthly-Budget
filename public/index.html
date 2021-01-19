@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" content="width=device-width,initial-scale=1" name="viewport">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link type="text/css" rel="stylesheet" href="./styles/index.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="./src/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon_io/favicon-16x16.png">
+    <title>Monthly Budget</title>
+</head>
+
+<body>
+    <header>
+        <h1>Monthly Budget</h1>
+    </header>
+    <section class="container">
+        <div class="input__section">
+            <div class="container__transaction">
+                <h2>Add Transaction</h2>
+                <fieldset class="add__type">
+                    <div class="radio__wraper">
+                        <label>
+                            <input type="radio" id="income" value="inc" name="radio">
+                            <label for="income">Income</label>
+                        </label>
+                        <label>
+                            <input type="radio" id="expense" value="exp" name="radio">
+                            <label for="expense">Expense</label>
+                        </label>
+                    </div>
+                    <div class="input__wraper">
+                        <input type="text" inputmode="decimal" class="add__value" placeholder="Value">
+                        <input type="text" class="add__description" placeholder="Description">
+                    </div>
+
+                </fieldset>
+                <div class="add__container">
+                <button class="add__btn">Submit</button>
+                </div>
+            </div>
+
+            <div class="container__import">
+                <h2>Import .CSV</h2>
+                    <p>Please make sure that your file has only 2 columns named <b>Description</b> and <b>Value</b> (Description;Value)</p>
+                    <form class="form" id="uploadForm">
+                        <div class="add__file">
+                            <input type="file" id="file__select" name="fileUplo" accept=".csv">
+                            <label for="file__select" class="file__btn">Choose a file</label>
+                        </div>
+
+                        <button type="submit" id="file__upload">Upload</button>
+                    </form>
+
+            </div>
+        </div>
+        <div class="container__transactions--list">
+            <h2>Transactions List</h2>
+            <div class="transactions__row">
+                <p>Description</p>
+                <p>Value</p>
+            </div>
+            <div class="transactions__list"></div>
+
+        </div>
+        <div class="output__section">
+            <div class="container__transaction--overview">
+                <h2>Transaction Overview</h2>
+                <div class="ct-chart ct-perfect-fourth" id="chart3"></div>
+                <div class="ct-chart ct-perfect-fourth" id="chart1"></div>
+            </div>
+
+            <div class="container__budget">
+                <h2>Budget</h2>
+                <div class="budget__text">
+                    <div class="budget__title">
+                        Available Budget in <span class="budget__title--month">%Month%</span>:
+                    </div>
+
+                    <div class="budget__value"><b>+ 2,345.64</b></div>
+
+                    <div class="budget__income clearfix">
+                        <div class="budget__income--text">Income</div>
+                        <div class="right">
+                            <div class="budget__income--value">+ 4,300.00</div>
+                            <div class="budget__income--percentage">&nbsp;</div>
+                        </div>
+                    </div>
+
+                    <div class="budget__expenses clearfix">
+                        <div class="budget__expenses--text">Expenses</div>
+                        <div class="right clearfix">
+                            <div class="budget__expenses--value">- 1,954.36</div>
+                            <div class="budget__expenses--percentage">45%</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="ct-chart ct-perfect-fourth" id="chart2"></div>
+            </div>
+        </div>
+    </section>
+
+
+
+    </div>
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/csv-sort/dist/csv-sort.umd.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
+    <script type="module" src="./src/app.js"></script>
+</body>
+
+</html>
