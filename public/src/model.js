@@ -26,7 +26,6 @@ export const budgetController = (function () {
     data.totals[type] = sum;
   };
 
-  // data structure
   const data = {
     allItems: {
       exp: [],
@@ -42,30 +41,23 @@ export const budgetController = (function () {
   return {
     addItem: function (type, des, val) {
       let newItem, ID;
-      // Create new ID
+
       if (data.allItems[type].length > 0) {
         ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
       } else {
         ID = 0;
       }
 
-      // Create new item basen on 'inc' or 'exp' type
       if (type === "exp") {
         newItem = new Expense(ID, des, val);
       } else if (type === "inc") {
         newItem = new Income(ID, des, val);
       }
-      // Push it into our data structure
       data.allItems[type].push(newItem);
-      //localStorage.setItem(`${type}`, JSON.stringify(data.allItems[type]));
-      // Return the new element
       return newItem;
     },
 
     uploadData: function(res){
-      /* const response = await fetch('/uploads');
-      const uploads = await response.json();
-      */
       let paymentsList =  res.map((item) =>{
       let paymentsData = {
         type: "exp",
@@ -79,7 +71,6 @@ export const budgetController = (function () {
       if(!item.Description || item.Description === null){
         paymentsData.description = "Transaction";
       }
-      //if(item.Obciążenia || item.Uznania === NaN)
       return paymentsData;
     });
       return this.pushData(paymentsList);
@@ -87,13 +78,9 @@ export const budgetController = (function () {
     },
 
     pushData: function(list) {
-      //uploadData
-
-      // split data for exp and inc
       let expense = list.filter(el => el.type === 'exp');
       let income = list.filter(el => el.type === 'inc');
 
-      // add ID
       const asignID = function() {
         let ID;
         if (list.length > 0) {
@@ -109,7 +96,6 @@ export const budgetController = (function () {
         })
       };
       asignID();
-      // push into data object
       expense.forEach(el => {
 
         data.allItems.exp.push(new Expense(el.id,el.description, el.value));
@@ -121,17 +107,6 @@ export const budgetController = (function () {
       calculateTotal("inc");
 
     },
-
-
-    /*uploadCurrency: async function(){
-      const res = await fetch('https://thingproxy.freeboard.io/fetch/http://api.nbp.pl/api/exchangerates/tables/c/');
-      let currenciesData = await res.json();
-      const currenciesList = [...currenciesData[0].rates];
-      const exrates = currenciesList.filter(ex => ex.code === "USD" || ex.code === "EUR" || ex.code === "GBP");
-      return exrates;
-    },
-    */
-
     deleteItem: function (type, id) {
       let ids, index;
       ids = data.allItems[type].map((current) => current.id);
@@ -139,17 +114,14 @@ export const budgetController = (function () {
 
       if (index !== -1) {
         data.allItems[type].splice(index, 1);
-        localStorage.removeItem(`${type}`, JSON.stringify(data.allItems[type].id[ids]));
       }
+
     },
 
     calculateBudget: function () {
-      // calculate total income and expenses
       calculateTotal("exp");
       calculateTotal("inc");
-      // calculate the budget: income - expenses
       data.budget = data.totals.inc - data.totals.exp;
-      // calculate the percentage of income that we spent
       if (data.totals.inc > 0) {
         data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
       } else {
@@ -162,7 +134,8 @@ export const budgetController = (function () {
     getTransactions: function() {
       return {
         exp:data.allItems.exp,
-        inc:data.allItems.inc
+        inc:data.allItems.inc,
+        all: data.allItems.exp.length + data.allItems.inc.length
       }
     },
 
@@ -179,8 +152,5 @@ export const budgetController = (function () {
       };
     },
 
-    testing: function () {
-      console.log(data);
-    },
   };
 })();

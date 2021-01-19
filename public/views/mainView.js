@@ -60,20 +60,17 @@ export const UIController = (function () {
       let html, newHTML;
       // Create HTML string with a placeholder text
       if (type === "inc") {
-        html = `<div class="item clearfix" id="inc-%id%"> <div class="item__description">%description%</div>
-              <div class="right clearfix"> <div class="item__value">%value%</div> <div class="item__delete">
+        html = `<div class="item clearfix" id="inc-${obj.id}"> <div class="item__description">${obj.description}</div>
+              <div class="right clearfix"> <div class="item__value">${formatNumber(obj.value, type)}</div> <div class="item__delete">
               <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div>
               </div>`;
       } else if (type === "exp") {
-        html = `<div class="item clearfix" id="exp-%id%"> <div class="item__description">%description%</div>
-              <div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage"></div>
+        html = `<div class="item clearfix" id="exp-${obj.id}"> <div class="item__description">${obj.description}</div>
+              <div class="right clearfix"><div class="item__value">${formatNumber(obj.value, type)}</div><div class="item__percentage"></div>
               <div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div>
               </div>`;
       }
-      // Replace the placeholder with some actual data
-      newHTML = html.replace("%id%", obj.id);
-      newHTML = html.replace("%description%", obj.description);
-      newHTML = newHTML.replace("%value%", formatNumber(obj.value, type));
+      newHTML = html;
       // Insert the HTML into the DOM
       document.querySelector(DOMstrings.transactionsContainer).insertAdjacentHTML("beforeend", newHTML);
     },
@@ -114,17 +111,6 @@ export const UIController = (function () {
         document.querySelector(DOMstrings.percentageLabel).textContent = "---";
       }
     },
-
-    /*displayCurrencies: function(exrates){
-      document.querySelector(`#${DOMstrings.tableEUR} > th + th`).textContent = exrates[1].bid;
-      document.querySelector(`#${DOMstrings.tableEUR} > th + th + th`).textContent = exrates[1].ask;
-      document.querySelector(`#${DOMstrings.tableUSD} > th + th`).textContent = exrates[0].bid;
-      document.querySelector(`#${DOMstrings.tableUSD} > th + th + th`).textContent = exrates[0].ask;
-      document.querySelector(`#${DOMstrings.tableGBP} > th + th`).textContent = exrates[2].bid;
-      document.querySelector(`#${DOMstrings.tableGBP} > th + th + th`).textContent = exrates[2].ask;
-
-    },
-    */
     displayPercentage: function (percentages) {
       const fields = document.querySelectorAll(DOMstrings.expensesPerc);
 
@@ -145,12 +131,56 @@ export const UIController = (function () {
       document.querySelector(DOMstrings.dateLabel).textContent =
         month + " " + year;
     },
-    displayBarChart: function(ids,values) {
-      new Chartist.Bar('#chart1', {
-        labels: ids,
-        series: [values]
-      });
 
+    displayExpenseChart: function(ids,values) {
+      const options = {
+        seriesBarDistance: 6,
+        axisX: {
+          showGrid:false,
+          offset: 30,
+          labelOffset: {
+            x: 0,
+            y: 5
+          },
+          chartPadding: {
+            top: 20,
+            right: 15,
+            bottom: 5,
+            left: 10
+          },
+        }
+      }
+      new Chartist.Bar('#chart1',{
+        labels: ids,
+        series: values
+      }, options);
+    },
+
+    displayIncomeChart: function(ids,val) {
+      const options = {
+        seriesBarDistance: 6,
+        axisX: {
+          offset: 30,
+          showGrid:false,
+          labelOffset: {
+            x: 0,
+            y: 5
+          },
+          chartPadding: {
+            top: 20,
+            right: 15,
+            bottom: 5,
+            left: 10
+          },
+          axisY: {
+
+          }
+        }
+      }
+      new Chartist.Bar('#chart3', {
+        labels: ids,
+        series: val
+      }, options);
     },
     displayBudgetChart: function(budget){
       new Chartist.Pie('#chart2', {

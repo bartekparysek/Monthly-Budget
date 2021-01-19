@@ -109,7 +109,7 @@ fieldset{
 
 }
 .add__btn, #file__upload, .add__file label{
-
+    cursor: pointer;
     position: relative;
     width: 130px;
     height:40px;
@@ -127,7 +127,6 @@ fieldset{
 .form{
     display:flex;
     padding: 5px 0;
-    //justify-content: space-evenly;
 }
 #file__select{
     width: 0.1px;
@@ -146,7 +145,9 @@ fieldset{
     margin-right: 5px;
 }
 .add__file input:hover + label,
-.add__file input:focus + label{
+.add__file input:focus + label,
+.add__btn:hover, #file__upload:hover,
+.add__btn:focus, #file__upload:focus{
     transform: scale(1.02);
 }
 .add__file input:focus + label{
@@ -168,39 +169,53 @@ fieldset{
     margin: 3px 0;
     font-size: 10px;
     border-radius: 4px;
-    padding: 5px 5px;
+    padding: 5px;
 }
 
 .item__description{
-    font-size: 12px;
+    overflow-wrap: normal;
 }
-.item__value, .item__description{
-    margin: 3px 10px;
+.item__value,.item__description, .item__percentage{
+    font-size: 10px;
+    padding: 2px 0;
+}
+.item__value,.item__percentage{
+    white-space: nowrap;
+    padding-left: 2px;
+}
+.item__percentage{
+    padding-right: 2px;
 }
 .item__delete--btn {
-    font-size: 18px;
+    font-size: 16px;
     background: none;
     border: none;
     cursor: pointer;
+    white-space: nowrap;
     display: inline-block;
     vertical-align: middle;
     line-height: 1;
-    margin: 1px 3px 0 0 ;
+    padding: 0 3px 0 0 ;
     color: $text-color;
 }
-
-//.item__delete--btn:focus { outline: none; }
-//.item__delete--btn:active { transform: translateY(2px); }
-
-//.item:hover .item__delete--btn { display: block; }
-//.item:hover .item__value { transform: translateX(-20px); }
-//.item:hover .item__percentage { transform: translateX(-20px); }
-
-/*.budget__text{
-    //padding-left: 30px;
-    margin:0 30px 5px 0;
+.ct-series-a .ct-bar {
+    stroke: $default-red;
+    stroke-linecap: round;
 }
-*/
+#chart3 .ct-series-a .ct-bar {
+    stroke: $default-green;
+    stroke-linecap: round;
+}
+.ct-series-a .ct-slice-pie {
+    fill: $default-red;
+    stroke: white;
+    stroke-width: 4px;
+  }
+  .ct-series-b .ct-slice-pie {
+    fill: $default-green;
+    stroke-width: 4px;
+  }
+
 .budget__title{
     padding: 5px 0;
 }
@@ -209,11 +224,9 @@ fieldset{
     padding: 10px 0;
 }
 .budget__income--value{
-    //padding-left: 25px;
     color:$default-green;
 }
 .budget__expenses--value{
-    //padding-left: 14px;
     color:$default-red;
 }
 .item:nth-child(even) { background-color: $form-grey; }
@@ -221,8 +234,6 @@ fieldset{
     display:flex;
     font-size: 15px;
     justify-content: space-between;
-    //margin-right:30px;
-
 }
 .budget__expenses--value,.budget__income--value{
     font-size: 15px;
@@ -254,6 +265,18 @@ fieldset{
     #income + label, #expense + label{
         font-size: 11.5px;
     }
+    .ct-series-a .ct-bar {
+        stroke-width: 4px;
+    }
+    #chart3 .ct-series-a .ct-bar {
+        stroke-width: 4px;
+    }
+    .ct-label{
+        font-size: 7px;
+    }
+    .ct-label .ct-horizontal{
+        padding-right:10px;
+    }
 
 }
 @media only screen and (min-width: 665px) and (max-width: 1023px) {
@@ -268,8 +291,6 @@ fieldset{
     .add__value,.add__description{
         padding: 20px;
         min-width: 140px;
-        //font-size: 14px;
-
     }
     .add__value{
         margin-right: 5px;
@@ -322,12 +343,28 @@ fieldset{
         padding: 14px;
 
     }
+    .item__value,.item__description, .item__percentage{
+        font-size: inherit;
+        padding: 5px;
+    }
+    .item__delete--btn {
+        margin-top: 4px;
+    }
     .container__transaction,.container__import, .container__transactions--list,
     .container__transaction--overview, .container__budget{
     border: 0.5px;
     border-radius: 10px;
     padding: 10px 30px;
     margin-bottom: 3px;
+    }
+    .ct-series-a .ct-bar {
+        stroke-width: 8.5px;
+    }
+    #chart3 .ct-series-a .ct-bar {
+        stroke-width: 8.5px;
+    }
+    .ct-label{
+        font-size: 10px;
     }
 }
 
@@ -346,26 +383,26 @@ fieldset{
         font-size: 16px;
         padding: 10px;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: center;
     }
+
     fieldset {
         flex-direction: column;
 
     }
-
+    .radio__wraper > label {
+        padding:5px 20px;
+    }
     .input__wraper{
         display: flex;
-        justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
 
     }
     .add__value,.add__description{
         padding: 20px;
-        min-width: 200px;
-        //font-size: 14px;
-
-    }
-    .add__value{
-        margin-right: 5px;
+        min-width: 450px;
+        margin-top: 10px;
     }
     .container__import{
         display: flex;
@@ -386,6 +423,20 @@ fieldset{
         padding: 15px;
 
     }
+    .transactions__row{
+        padding: 15px 40px;
+    }
+    .item{
+        padding: 15px 40px;
+    }
+    .item__value,.item__description, .item__percentage{
+        font-size: 15px;
+        padding: 5px;
+    }
+    .item__delete--btn {
+        font-size: 20px;
+        margin-top: 5px;
+    }
     .form{
         padding: 10px 0;
         justify-content: space-around;
@@ -398,15 +449,13 @@ fieldset{
         justify-content: center;
         padding: 10px;
     }
-    /*
-    .input__section{
-        flex-direction: column;
-        flex-wrap: wrap;
+    .ct-series-a .ct-bar {
+        stroke-width: 15px;
     }
-    .container__transaction{
-        margin-bottom: 10px;
+    #chart3 .ct-series-a .ct-bar {
+        stroke-width: 15px;
     }
-    */
+
     .container__transaction,.container__import, .container__transactions--list,
     .container__transaction--overview, .container__budget{
     background-color: white;
