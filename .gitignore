@@ -2,3 +2,4 @@ node_modules/
 testFiles/
 uploads/
 package-lock.json
+index.js
